@@ -39,9 +39,8 @@ class SuperHeroDetailPresenter(
     }
 
     private fun refreshSuperHero() = executor.submit {
-        val superHero = getSuperHeroById(id) ?: return@submit
+        getSuperHeroById(id)
         view?.hideLoading()
-        view?.showSuperHero(superHero)
     }
 
     interface View {
