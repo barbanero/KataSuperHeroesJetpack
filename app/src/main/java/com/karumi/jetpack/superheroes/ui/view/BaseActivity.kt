@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -25,6 +26,8 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
         setSupportActionBar(toolbarView)
         prepare(intent)
     }
+
+
 
     open fun prepare(intent: Intent?) {}
 }

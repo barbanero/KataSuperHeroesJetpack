@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
 import com.karumi.jetpack.superheroes.R
 import com.karumi.jetpack.superheroes.common.module
 import com.karumi.jetpack.superheroes.domain.model.SuperHero
@@ -17,7 +18,7 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 
-class EditSuperHeroActivity : BaseActivity(), EditSuperHeroPresenter.View {
+class EditSuperHeroActivity : BaseActivity(), EditSuperHeroPresenter.View, LifecycleOwner {
     companion object {
         private const val SUPER_HERO_ID_KEY = "super_hero_id_key"
 
@@ -28,7 +29,7 @@ class EditSuperHeroActivity : BaseActivity(), EditSuperHeroPresenter.View {
         }
     }
 
-    private val presenter: EditSuperHeroPresenter by instance()
+    override val presenter: EditSuperHeroPresenter by instance()
     override val layoutId = R.layout.edit_super_hero_activity
     override val toolbarView: Toolbar
         get() = toolbar
@@ -43,16 +44,7 @@ class EditSuperHeroActivity : BaseActivity(), EditSuperHeroPresenter.View {
                 isAvenger = cb_is_avenger.isChecked
             )
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
     }
 
     override fun prepare(intent: Intent?) {

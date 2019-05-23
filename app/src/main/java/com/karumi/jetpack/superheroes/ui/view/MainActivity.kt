@@ -31,12 +31,13 @@ class MainActivity : BaseActivity(), SuperHeroesPresenter.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
+        lifecycle.addObserver(presenter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
+        lifecycle.addObserver(presenter)
+        lifecycle.removeObserver(presenter)
     }
 
     private fun initializeAdapter() {
