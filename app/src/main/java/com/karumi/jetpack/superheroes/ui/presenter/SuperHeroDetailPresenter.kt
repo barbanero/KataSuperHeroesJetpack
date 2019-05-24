@@ -1,43 +1,40 @@
 package com.karumi.jetpack.superheroes.ui.presenter
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ViewModel
 import com.karumi.jetpack.superheroes.domain.model.SuperHero
 import com.karumi.jetpack.superheroes.domain.usecase.GetSuperHeroById
 import com.karumi.jetpack.superheroes.ui.view.SingleLiveEvent
 
 class SuperHeroDetailPresenter(
     private val getSuperHeroById: GetSuperHeroById
-) : SuperHeroDetailListener, LifecycleObserver {
+) : ViewModel(), SuperHeroDetailListener, LifecycleObserver {
 
-    val isLoading = MutableLiveData<Boolean>()
-    val superHero = MediatorLiveData<SuperHero?>()
-    val idOfSuperHeroToEdit = SingleLiveEvent<String>()
+  val isLoading = MutableLiveData<Boolean>()
+  val superHero = MediatorLiveData<SuperHero?>()
+  val idOfSuperHeroToEdit = SingleLiveEvent<String>()
 
-    private lateinit var id: String
+  private lateinit var id: String
 
-    fun preparePresenter(id: String) {
-        this.id = id
+  fun prepare(id: String) {
+    isLoading.value = true
+    superHero.addSource(getSuperHeroById(id)) {
+      superHero.postValue(it)
+      isLoading.value = false
     }
+  }
 
-    @OnLifecycleEvent(ON_CREATE)
-    fun onCreate() {
-        isLoading.postValue(true)
-
-        superHero.addSource(getSuperHeroById(id)) {
-            superHero.postValue(it)
-            isLoading.postValue(false)
-        }
-    }
-
-    override fun onEditSelected() {
-        idOfSuperHeroToEdit.value = id
-    }
+  override fun onEditSelected() {
+    idOfSuperHeroToEdit.value = id
+  }
 }
 
 interface SuperHeroDetailListener {
-    fun onEditSelected()
+  fun onEditSelected()
 }

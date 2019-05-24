@@ -8,18 +8,10 @@
     <import type="android.view.View" />
     <import type="androidx.lifecycle.LiveData" />
     <import type="com.karumi.jetpack.superheroes.domain.model.SuperHero" />
-
+    <import type="com.karumi.jetpack.superheroes.ui.presenter.SuperHeroDetailPresenter" />
     <variable
-      name="listener"
-      type="com.karumi.jetpack.superheroes.ui.presenter.SuperHeroDetailListener" />
-
-    <variable
-      name="superHero"
-      type="LiveData&lt;SuperHero&gt;" />
-
-    <variable
-      name="isLoading"
-      type="LiveData&lt;Boolean&gt;" />
+        name="viewModel"
+        type="SuperHeroDetailPresenter" />
 
   </data>
 
